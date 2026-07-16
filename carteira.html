@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minha Carteira - Xpto Digital ID</title>
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><span>Xpto Digital ID</span></div>
+  <div class="app-content">
+    <div class="page">
+      <div class="top-bar">
+        <h2>Minha Carteira Digital</h2>
+        <a href="#" id="sair" class="link-sair">Sair</a>
+      </div>
+
+      <div class="id-card">
+        <div class="id-card-header">
+          <span class="id-empresa">XPTO DIGITAL</span>
+          <span class="id-selo">✔ DOCUMENTO VÁLIDO</span>
+        </div>
+        <div class="id-card-body">
+          <div class="id-foto" id="foto"></div>
+          <div class="id-dados">
+            <span class="id-nome" id="nome"></span>
+            <span class="id-cargo" id="cargo"></span>
+            <span class="id-depto" id="departamento"></span>
+            <div class="id-linha"><span>Matrícula</span><strong id="matricula"></strong></div>
+            <div class="id-linha"><span>CPF</span><strong id="cpf"></strong></div>
+            <div class="id-linha"><span>Admissão</span><strong id="admissao"></strong></div>
+            <div class="id-linha"><span>Válido até</span><strong id="validade"></strong></div>
+          </div>
+        </div>
+        <div class="id-card-footer">
+          <div class="qr-fake">QR</div>
+          <span>Apresente este QR Code para validação de autenticidade</span>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Este documento possui a mesma validade jurídica da carteira funcional impressa,
+        conforme Termos de Uso aceitos no primeiro acesso.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var funcionarios = {
+    '12345': {
+      nome: 'Thun Chiu',
+      cargo: 'Analista de Sistemas',
+      departamento: 'Tecnologia da Informação',
+      cpf: '123.456.789-00',
+      admissao: '01/03/2022',
+      validade: '16/07/2027'
+    },
+    '54321': {
+      nome: 'Maria Souza',
+      cargo: 'Analista de RH',
+      departamento: 'Recursos Humanos',
+      cpf: '987.654.321-00',
+      admissao: '15/06/2021',
+      validade: '16/07/2027'
+    }
+  };
+
+  var matricula = localStorage.getItem('matriculaLogada');
+  var funcionario = funcionarios[matricula];
+
+  if (!matricula || !funcionario) {
+    window.location.href = 'login.html';
+  } else {
+    document.getElementById('foto').innerText = funcionario.nome.substring(0, 1);
+    document.getElementById('nome').innerText = funcionario.nome;
+    document.getElementById('cargo').innerText = funcionario.cargo;
+    document.getElementById('departamento').innerText = funcionario.departamento;
+    document.getElementById('matricula').innerText = matricula;
+    document.getElementById('cpf').innerText = funcionario.cpf;
+    document.getElementById('admissao').innerText = funcionario.admissao;
+    document.getElementById('validade').innerText = funcionario.validade;
+  }
+
+  document.getElementById('sair').addEventListener('click', function (e) {
+    e.preventDefault();
+    localStorage.removeItem('matriculaLogada');
+    window.location.href = 'index.html';
+  });
+</script>
+</body>
+</html>

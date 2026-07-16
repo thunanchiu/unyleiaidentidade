@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - Xpto Digital ID</title>
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><span>Xpto Digital ID</span></div>
+  <div class="app-content">
+    <div class="page">
+      <h2>Acessar Carteira Digital</h2>
+      <p id="erro" class="error-msg" style="display:none;">Matrícula ou senha inválidas.</p>
+      <form id="form-login">
+        <label>Matrícula</label>
+        <input type="text" id="matricula" placeholder="Ex: 12345" />
+        <label>Senha</label>
+        <input type="password" id="senha" placeholder="••••" />
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+      <p class="hint">Demonstração: matrícula <strong>12345</strong> / senha <strong>1234</strong></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Redireciona para os Termos caso ainda não tenham sido aceitos.
+  if (localStorage.getItem('termosAceitos') !== 'true') {
+    window.location.href = 'termos.html';
+  }
+
+  // Base "fake" de funcionários, apenas para demonstração do estudo de caso.
+  var funcionarios = {
+    '12345': {
+      senha: '1234',
+      nome: 'Thun Chiu',
+      cargo: 'Analista de Sistemas',
+      departamento: 'Tecnologia da Informação',
+      cpf: '123.456.789-00',
+      admissao: '01/03/2022',
+      validade: '16/07/2027'
+    },
+    '54321': {
+      senha: '4321',
+      nome: 'Maria Souza',
+      cargo: 'Analista de RH',
+      departamento: 'Recursos Humanos',
+      cpf: '987.654.321-00',
+      admissao: '15/06/2021',
+      validade: '16/07/2027'
+    }
+  };
+
+  document.getElementById('form-login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var matricula = document.getElementById('matricula').value.trim();
+    var senha = document.getElementById('senha').value.trim();
+    var funcionario = funcionarios[matricula];
+
+    if (!funcionario || funcionario.senha !== senha) {
+      document.getElementById('erro').style.display = 'block';
+      return;
+    }
+
+    localStorage.setItem('matriculaLogada', matricula);
+    window.location.href = 'carteira.html';
+  });
+</script>
+</body>
+</html>
